@@ -46,6 +46,7 @@ const initDb = async () => {
         precioPieza DECIMAL(10,2),
         estadoPago TEXT CHECK(estadoPago IN ('al_dia', 'debe')),
         fechaRecibo DATE,
+        fechaVencimiento DATE,
         FOREIGN KEY (property_id) REFERENCES properties (id)
       )
     `);

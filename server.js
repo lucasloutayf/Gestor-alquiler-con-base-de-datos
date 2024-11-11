@@ -52,7 +52,7 @@ app.put('/api/tenants/:id', async (req, res) => {
     await run(`
       UPDATE tenants 
       SET nombre = ?, apellido = ?, dni = ?, telefono = ?,
-          telefonoConocido = ?, precioPieza = ?, estadoPago = ?, fechaRecibo = ?
+          telefonoConocido = ?, precioPieza = ?, estadoPago = ?, fechaRecibo = ?, fechaVencimiento = ?
       WHERE id = ?
     `, [
       req.body.nombre,
@@ -63,6 +63,7 @@ app.put('/api/tenants/:id', async (req, res) => {
       req.body.precioPieza,
       req.body.estadoPago,
       req.body.fechaRecibo,
+      req.body.fechaVencimiento,
       req.params.id
     ]);
     
