@@ -15,10 +15,15 @@ function addTenantCard(propertyId) {
     const tenantCard = document.createElement('div');
     tenantCard.className = 'tenant-card';
     tenantCard.id = tenantId;
-    tenantCard.dataset.propertyId = propertyId; // Store property ID in the card
+    tenantCard.dataset.propertyId = propertyId;
 
     tenantCard.innerHTML = `
-        <h3 class="tenant-name" onclick="toggleDetails('${tenantId}')">Nueva Inquilina</h3>
+        <div class="tenant-header">
+            <h3 class="tenant-name" onclick="toggleDetails('${tenantId}')">Nueva Inquilina</h3>
+            <button class="delete-button" onclick="deleteTenant('${tenantId}')">
+                <span class="delete-icon">×</span>
+            </button>
+        </div>
         <div class="tenant-details">
             <label>
                 Nombre:
@@ -68,6 +73,21 @@ function addTenantCard(propertyId) {
     tenantsDiv.appendChild(tenantCard);
 }
 
+function deleteTenant(tenantId) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta inquilina?')) {
+        const tenantCard = document.getElementById(tenantId);
+        if (tenantCard) {
+            // Remove from DOM
+            tenantCard.remove();
+            
+            // Remove from localStorage
+            const tenants = JSON.parse(localStorage.getItem('tenants') || '{}');
+            delete tenants[tenantId];
+            localStorage.setItem('tenants', JSON.stringify(tenants));
+        }
+    }
+}
+
 function toggleDetails(tenantId) {
     const tenantCard = document.getElementById(tenantId);
     const detailsDiv = tenantCard.querySelector('.tenant-details');
@@ -94,11 +114,11 @@ function updateTenantInfo(tenantId) {
 
 function saveTenantData(tenantId) {
     const tenantCard = document.getElementById(tenantId);
-    const propertyId = tenantCard.dataset.propertyId; // Get property ID from the card
+    const propertyId = tenantCard.dataset.propertyId;
     
     const tenantData = {
         id: tenantId,
-        propertyId: propertyId, // Include property ID in saved data
+        propertyId: propertyId,
         nombre: tenantCard.querySelector('input[name="nombre"]').value,
         apellido: tenantCard.querySelector('input[name="apellido"]').value,
         dni: tenantCard.querySelector('input[name="dni"]').value,
@@ -139,14 +159,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const tenantCard = document.createElement('div');
             tenantCard.className = 'tenant-card';
             tenantCard.id = tenant.id;
-            tenantCard.dataset.propertyId = propertyId; // Store property ID in the card
+            tenantCard.dataset.propertyId = propertyId;
             
-            // Recreate tenant card with saved data
             tenantCard.innerHTML = `
-                <h3 class="tenant-name ${tenant.estadoPago === 'debe' ? 'deudora' : ''}" 
-                    onclick="toggleDetails('${tenant.id}')">
-                    ${tenant.nombre} ${tenant.apellido}
-                </h3>
+                <div class="tenant-header">
+                    <h3 class="tenant-name ${tenant.estadoPago === 'debe' ? 'deudora' : ''}" 
+                        onclick="toggleDetails('${tenant.id}')">
+                        ${tenant.nombre} ${tenant.apellido}
+                    </h3>
+                    <button class="delete-button" onclick="deleteTenant('${tenant.id}')">
+                        <span class="delete-icon">×</span>
+                    </button>
+                </div>
                 <div class="tenant-details">
                     <label>
                         Nombre:
