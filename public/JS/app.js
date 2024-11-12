@@ -15,6 +15,7 @@ function addTenantCard(propertyId) {
     const tenantCard = document.createElement('div');
     tenantCard.className = 'tenant-card';
     tenantCard.id = tenantId;
+    tenantCard.dataset.propertyId = propertyId; // Store property ID in the card
 
     tenantCard.innerHTML = `
         <h3 class="tenant-name" onclick="toggleDetails('${tenantId}')">Nueva Inquilina</h3>
@@ -93,9 +94,11 @@ function updateTenantInfo(tenantId) {
 
 function saveTenantData(tenantId) {
     const tenantCard = document.getElementById(tenantId);
+    const propertyId = tenantCard.dataset.propertyId; // Get property ID from the card
     
     const tenantData = {
         id: tenantId,
+        propertyId: propertyId, // Include property ID in saved data
         nombre: tenantCard.querySelector('input[name="nombre"]').value,
         apellido: tenantCard.querySelector('input[name="apellido"]').value,
         dni: tenantCard.querySelector('input[name="dni"]').value,
@@ -129,13 +132,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const tenants = JSON.parse(localStorage.getItem('tenants') || '{}');
     
     Object.values(tenants).forEach(tenant => {
-        const propertyId = tenant.propertyId || 1; // Default to property 1 if not specified
+        const propertyId = tenant.propertyId;
         const tenantsDiv = document.getElementById(`tenants-property${propertyId}`);
         
         if (tenantsDiv) {
             const tenantCard = document.createElement('div');
             tenantCard.className = 'tenant-card';
             tenantCard.id = tenant.id;
+            tenantCard.dataset.propertyId = propertyId; // Store property ID in the card
             
             // Recreate tenant card with saved data
             tenantCard.innerHTML = `
