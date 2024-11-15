@@ -13,6 +13,7 @@ body {
     background-blend-mode: normal, normal;
     color: #333;
     min-height: 100vh;
+  
 }
 
 /* Header Styles */
@@ -101,7 +102,8 @@ h2 {
     font-size: 1rem;
     font-weight: 500;
     transition: background-color 0.3s ease;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins';
+  
 }
 
 .property button:hover {
@@ -129,11 +131,18 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.tenant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 .tenant-name {
     color: #333;
     cursor: pointer;
     font-size: 1.25rem;
-    margin-bottom: 1rem;
+    margin: 0;
     font-weight: bold;
 }
 
@@ -141,9 +150,32 @@ h2 {
     color: #e74c3c;
 }
 
+.delete-button {
+    background-color: transparent;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.delete-button:hover {
+    background-color: #fee2e2;
+}
+
+.delete-icon {
+    line-height: 1;
+}
+
 /* Form Styles */
 .tenant-details {
     display: none;
+  
 }
 
 .tenant-details label {
@@ -161,6 +193,7 @@ h2 {
     border-radius: 4px;
     font-size: 1rem;
     margin-top: 0.25rem;
+  
 }
 
 .tenant-details input:focus,

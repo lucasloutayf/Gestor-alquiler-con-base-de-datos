@@ -73,6 +73,14 @@ function addTenantCard(propertyId) {
     tenantsDiv.appendChild(tenantCard);
 }
 
+function toggleDetails(tenantId) {
+    const tenantCard = document.getElementById(tenantId);
+    const detailsDiv = tenantCard.querySelector('.tenant-details');
+    const isVisible = detailsDiv.style.display === 'block';
+    
+    detailsDiv.style.display = isVisible ? 'none' : 'block';
+}
+
 function deleteTenant(tenantId) {
     if (confirm('¿Estás seguro de que deseas eliminar esta inquilina?')) {
         const tenantCard = document.getElementById(tenantId);
@@ -86,14 +94,6 @@ function deleteTenant(tenantId) {
             localStorage.setItem('tenants', JSON.stringify(tenants));
         }
     }
-}
-
-function toggleDetails(tenantId) {
-    const tenantCard = document.getElementById(tenantId);
-    const detailsDiv = tenantCard.querySelector('.tenant-details');
-    const isVisible = detailsDiv.style.display === 'block';
-    
-    detailsDiv.style.display = isVisible ? 'none' : 'block';
 }
 
 function updateTenantInfo(tenantId) {
